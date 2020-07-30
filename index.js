@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { PORT, DB_URI, DB_OPTIONS } from "./config";
+import { PORT, DB_URI, DB_OPTIONS } from "./src/config";
 import { createApp } from "./src/app";
 
 const app = createApp();
