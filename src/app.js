@@ -1,5 +1,5 @@
 import express from "express";
-import { auth, users } from "./routes";
+import { auth, projects, users } from "./routes";
 
 export const createApp = () => {
   const app = express();
@@ -7,6 +7,8 @@ export const createApp = () => {
   app.use(express.json({ extended: true }));
 
   app.use("/api/auth", auth);
+
+  app.use("/api", projects);
 
   app.use("/api", users);
 
