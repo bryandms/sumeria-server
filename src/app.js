@@ -1,5 +1,5 @@
 import express from "express";
-import { auth, projects, users } from "./routes";
+import { auth, projects, tasks, users } from "./routes";
 
 export const createApp = () => {
   const app = express();
@@ -9,6 +9,8 @@ export const createApp = () => {
   app.use("/api/auth", auth);
 
   app.use("/api", projects);
+
+  app.use("/api", tasks);
 
   app.use("/api", users);
 
