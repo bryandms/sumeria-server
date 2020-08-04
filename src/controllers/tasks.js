@@ -3,7 +3,7 @@ import { Project, Task } from "../models";
 
 export const getTasks = async (req, res, next) => {
   try {
-    const { project } = req.body;
+    const { project } = req.query;
     const projectExists = await Project.findById(project);
 
     if (!projectExists)
@@ -12,7 +12,7 @@ export const getTasks = async (req, res, next) => {
     if (projectExists.createdBy.toString() !== req.user.id)
       return res.status(404).json({ message: "Not authorized." });
 
-    const tasks = await Task.find({ project });
+    const tasks = await Task.find({ project }).sort({ createdAt: -1 });
 
     return res.json({ message: "Tasks fetched successfully.", tasks });
   } catch (error) {
@@ -71,9 +71,8 @@ export const updateTask = async (req, res, next) => {
       return res.status(404).json({ message: "Could not find task." });
 
     let task = {};
-
-    if (name) task.name = name;
-    if (completed) task.completed = completed;
+    task.name = name;
+    task.completed = completed;
 
     task = await Task.findOneAndUpdate({ _id: req.params.id }, task, {
       new: true,
@@ -88,7 +87,7 @@ export const updateTask = async (req, res, next) => {
 
 export const deleteTask = async (req, res, next) => {
   try {
-    const { project } = req.body;
+    const { project } = req.query;
     const projectExists = await Project.findById(project);
 
     if (!projectExists)
