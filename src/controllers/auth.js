@@ -9,7 +9,7 @@ export const login = async (req, res, next) => {
   if (!errors.isEmpty())
     return res
       .status(422)
-      .json({ message: "Could not create user.", errors: errors.array() });
+      .json({ message: "Could not login.", errors: errors.array() });
 
   try {
     const { email, password } = req.body;
